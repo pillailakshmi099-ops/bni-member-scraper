@@ -1,0 +1,28 @@
+
+# Python virtual environment
+venv/
+__pycache__/
+*.pyc
+
+# Environment and secrets
+.env
+.env.*
+
+# Scraped Excel files
+*.xlsx
+*.xls
+
+# Debug and test files
+debug_*.py
+test_*.py
+profile_debug.html
+profile.html
+
+# VS Code settings
+.vscode/
+
+# Logs and temporary files
+*.log
+.DS_Store
+
+# Created by venv; see https://docs.python.org/3/library/venv.html
