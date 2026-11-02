@@ -141,37 +141,48 @@ def scrape_member_list():
 # STEP 2: CONFIGURE OPTIMIZED SELENIUM
 # ==========================================
 
+
 def create_driver():
 
     options = Options()
 
-    # Run Chrome in the background
     options.add_argument("--headless=new")
-
-    # Optimize browser performance
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-extensions")
 
-    # Load pages faster
     options.page_load_strategy = "eager"
 
-    # Block unnecessary images
     prefs = {
         "profile.managed_default_content_settings.images": 2
     }
 
-    options.add_experimental_option(
-        "prefs",
-        prefs
-    )
+    options.add_experimental_option("prefs", prefs)
 
-    driver = webdriver.Chrome(options=options)
+    # Streamlit Cloud (Linux)
+    import os
+
+    if os.path.exists("/usr/bin/chromium"):
+        options.binary_location = "/usr/bin/chromium"
+
+        from selenium.webdriver.chrome.service import Service
+
+        service = Service("/usr/bin/chromedriver")
+
+        driver = webdriver.Chrome(
+            service=service,
+            options=options
+        )
+
+    # Local computer (Windows)
+    else:
+        driver = webdriver.Chrome(options=options)
 
     driver.set_page_load_timeout(30)
 
     return driver
+
 
 
 
